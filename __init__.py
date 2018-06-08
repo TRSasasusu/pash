@@ -1,3 +1,3 @@
 # coding: utf-8
 
-from .pash_func import *
+from .qpsh_func import *
