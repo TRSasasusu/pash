@@ -1,2 +1,0 @@
-#!/bin/sh
-$SHELL -i $@
