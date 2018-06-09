@@ -1,6 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/qpsh.svg)](https://badge.fury.io/py/qpsh)
 # qpsh (Quick Python Shell commands)
-Call shell commands from python shell quickly.
+Call shell commands from python shell quickly. qpsh works on python, ipython, bpython, ptpython, ...
 
 ## Installation
 ```sh
