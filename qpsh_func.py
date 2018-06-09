@@ -35,3 +35,5 @@ for command in find_exe():
         import sys
         print(sys.exc_info())
         sys.exit()
+
+from .cd import cd
