@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import os
+import re
 import subprocess
 from .find_exe import find_exe
 
@@ -37,3 +39,10 @@ for command in find_exe():
         sys.exit()
 
 from .cd import cd
+
+
+alias = subprocess.run([os.getenv('SHELL', '/bin/bash'), '-ic', 'alias'], stdout=subprocess.PIPE).stdout.decode('utf8')
+for each_alias in alias.split('\n'):
+    each_alias = re.search('[0-9a-zA-Z]+=[\'\"][- 0-9a-zA-Z]+[\'\"]', each_alias)
+    if each_alias is not None:
+        exec('{} = Command({})'.format(*each_alias.group().split('=')))
