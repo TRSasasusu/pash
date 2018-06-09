@@ -9,17 +9,22 @@ class Command:
         self.command = command
 
     def __repr__(self):
-        return qpsh(self.command, True)
+        return '\n'.join(qpsh(self.command, True))
 
-    def __call__(self, arg, get_return=False):
+    def __call__(self, arg='', get_return=False):
         return qpsh('{} {}'.format(self.command, arg), get_return)
 
 
 def qpsh(command, get_return=False):
-    result = subprocess.run(command.split(' '), stdout=subprocess.PIPE).stdout.decode('utf8')
+    result = subprocess.run(list(filter(lambda x: x != '', command.split(' '))), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    decode = lambda x: x.decode('utf8')
     if get_return:
-        return result
-    print(result)
+        return decode(result.stdout), decode(result.stderr)
+
+    if result.stdout != b'':
+        print(decode(result.stdout))
+    if result.stderr != b'':
+        print(decode(result.stderr))
 
 
 for command in find_exe():
