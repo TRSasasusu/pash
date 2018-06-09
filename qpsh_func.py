@@ -16,7 +16,7 @@ class Command:
 
 
 def qpsh(command, get_return=False):
-    result = subprocess.run(list(filter(lambda x: x != '', command.split(' '))), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     decode = lambda x: x.decode('utf8')
     if get_return:
         return decode(result.stdout), decode(result.stderr)
