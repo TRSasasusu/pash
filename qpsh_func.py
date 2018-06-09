@@ -11,6 +11,9 @@ class Command:
     def __repr__(self):
         return qpsh(self.command, True)
 
+    def __call__(self, arg, get_return=False):
+        return qpsh('{} {}'.format(self.command, arg), get_return)
+
 
 def qpsh(command, get_return=False):
     result = subprocess.run(command.split(' '), stdout=subprocess.PIPE).stdout.decode('utf8')
