@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import os
+import sys
 import re
 import subprocess
 from .find_exe import find_exe
@@ -11,30 +12,35 @@ class Command:
         self.command = command
 
     def __repr__(self):
-        return '\n'.join(qpsh(self.command, True))
+        qpsh(self.command)
+        return ''
 
     def __call__(self, arg='', get_return=False):
         return qpsh('{} {}'.format(self.command, arg), get_return)
 
 
 def qpsh(command, get_return=False):
-    result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    decode = lambda x: x.decode('utf8')
     if get_return:
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        decode = lambda x: x.decode('utf8')
         return decode(result.stdout), decode(result.stderr)
 
-    if result.stdout != b'':
-        print(decode(result.stdout))
-    if result.stderr != b'':
-        print(decode(result.stderr))
+    if line_break:
+        print('\n')
+    subprocess.run(command, shell=True)
+    if line_break:
+        print('\n')
 
+if 'bpython' in sys.modules:
+    line_break = True
+else:
+    line_break = False
 
 for command in find_exe():
     try:
         exec('{command} = Command("{command}")'.format(command=command))
     except:
         print(command)
-        import sys
         print(sys.exc_info())
         sys.exit()
 
