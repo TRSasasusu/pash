@@ -8,7 +8,7 @@ requires = []
 
 setup(
     name='qpsh',
-    version='0.1',
+    version='0.2',
     description='Call shell commands from python shell.',
     url='https://github.com/TRSasasusu/qpsh',
     author='kaito kishi',
