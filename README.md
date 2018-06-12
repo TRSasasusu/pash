@@ -2,6 +2,8 @@
 # qpsh (Quick Python Shell commands)
 Call shell commands from python shell quickly. qpsh works on python, ipython, bpython, ptpython, ...
 
+Support Linux, macOS and Windows.
+
 ## Installation
 ```sh
 pip install qpsh
