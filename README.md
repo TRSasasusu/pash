@@ -78,5 +78,7 @@ Pass `get_return=True`, then, it returns with tuple.
 ('', 'clang: error: no input files\n')
 ```
 
+## [Release Note](https://github.com/TRSasasusu/qpsh/wiki/Release-Note)
+
 ## License
 MIT License
