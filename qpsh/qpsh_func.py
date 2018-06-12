@@ -47,8 +47,17 @@ for command in find_exe():
 from .cd import cd
 
 
-alias = subprocess.run([os.getenv('SHELL', '/bin/bash'), '-ic', 'alias'], stdout=subprocess.PIPE).stdout.decode('utf8')
+shell = os.getenv('SHELL')
+if not shell:
+    if os.path.exists('/bin/bash'):
+        shell = '/bin/bash'
+    else:
+        alias = qpsh('doskey /macros', True)[0].replace('\r', '')
+        alias = re.sub('=[- /0-9a-zA-Z]+', lambda x: '="{}"'.format(x.group()[1:]), alias)
+if shell:
+    alias = subprocess.run([os.getenv('SHELL', '/bin/bash'), '-ic', 'alias'], stdout=subprocess.PIPE).stdout.decode('utf8')
+
 for each_alias in alias.split('\n'):
-    each_alias = re.search('[0-9a-zA-Z]+=[\'\"][- 0-9a-zA-Z]+[\'\"]', each_alias)
+    each_alias = re.search('[0-9a-zA-Z]+=[\'\"][- /0-9a-zA-Z]+[\'\"]', each_alias)
     if each_alias is not None:
         exec('{} = Command({})'.format(*each_alias.group().split('=')))
